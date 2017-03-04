@@ -11,10 +11,10 @@
     
     <item>
       <title>zedboard_setup_linux</title>
-      <link>https://thofstee.github.io/blog/post/post-title/</link>
+      <link>https://thofstee.github.io/blog/post/zedboard-linux/</link>
       <pubDate>Sat, 04 Mar 2017 03:53:45 -0500</pubDate>
       
-      <guid>https://thofstee.github.io/blog/post/post-title/</guid>
+      <guid>https://thofstee.github.io/blog/post/zedboard-linux/</guid>
       <description>&lt;p&gt;First, we need to figure out where out ZedBoard is connected.&lt;/p&gt;
 
 &lt;p&gt;At the command line, enter the following: &lt;code&gt;dmesg | grep tty&lt;/code&gt;&lt;/p&gt;
