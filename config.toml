@@ -1,4 +1,4 @@
-baseurl = "https://thofstee.github.io/blog"
+baseurl = "https://thofstee.github.io"
 languageCode = "en"
 title = ""
 theme = "hugo-theme-bleak"
