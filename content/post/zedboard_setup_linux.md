@@ -1,8 +1,8 @@
 +++
-author = ""
+author = "Teguh Hofstee"
 comments = true
 date = "2017-03-04T03:53:45-05:00"
-description = ""
+description = "A tutorial for setting up a ZedBoard on Linux."
 draft = false
 featured = false
 image = ""
@@ -158,9 +158,11 @@ For more details about these, and other beginning tutorials about hardware desig
 --
 
 Given a project, we can also generate a bitstream from the command line. Instead of launching Vivado normally, we'll launch in Tcl mode and work through the needed commands. To do this, call Vivado with `-mode tcl` on the command line. We're going to start by using the project we created in the previous part, so we'll need to load it into Vivado. To do this we use the `open_project` command, then pass in the path to the .xpr file which is the Vivado project.
+
     open_project hello.xpr
 
 We need to create a Synthesis run, Implementation run, and a Bitstream. Since we already set up everything before, this is fairly straightforward. We use the command `create_run` to create these runs, which takes a `-flow` argument which is specific to the type of run and the tool we are using. When we make the Implementation run, we also need to tell Vivado that the Implementation run depends on the results from the prior Synthesis run. We do this by specifying the `-parent_run` argument. In the following code, synth and impl are the names for our runs. We'll also need to tell Vivado which stages we want it to run for Implementation. Since we want to generate a bitstream, we'll enable all the required stages. Lastly, we need to launch the runs with `launch_runs`.
+
     create_run -flow {Vivado Synthesis 2016} synth
     create_run -flow {Vivado Implementation 2016} -parent_run synth impl
     set_property flow {Vivado Implementation 2016} impl
@@ -176,19 +178,23 @@ Full disclaimer, this above section is untested and definitely doesn't work.
 Vivado also allows you to go through these steps without a project, called "Non-Project Mode". In Non-Project Mode, all the design files and designs happen in memory, and are not saved when exiting Vivado, unlike a project. What this means is for Non-Project Mode, you will want to make sure you have design checkpoints at major stages of the design workflow. Since this design is pretty small, we'll skip that for now.
 
 Once again, launch Vivado in Tcl mode. This time, we'll be loading source files instead of the project. For convenience's sake, I've copied over the .xdc and .v files to a new working directory. Since we're working with verilog, we'll need to use the `read_verilog` Tcl command. We'll also want to read in our design constraints.
+
     read_verilog top.v
     read_xdc top.xdc
 
 Now we need to run synthesis. We do this with the `synth_design` command. We'll need to specify our top module (in this case, it's "top"), as well as the part (for the ZedBoard, this is xc7z020clg484-1).
+
     synth_design -top top -part xc7z020clg484-1
 
 Now we want to optimize, place, and route the design. This is fairly straightforward:
+
     opt_design
     place_design
     phys_opt_design
     route_design
 
 Lastly, we want to generate a bitstream.
+
     write_bitstream top.bit
 
 Much simpler than project mode from the command line.
@@ -196,6 +202,7 @@ Much simpler than project mode from the command line.
 --
 
 Now that we have a bitstream, we want to flash it to the FPGA.
+
     # Start the labtools system
     open_hw
 
